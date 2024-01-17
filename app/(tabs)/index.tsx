@@ -8,6 +8,7 @@ const Page = () => {
       <Text>Page</Text>
       <Link href="/(modals)/login">Login</Link>
       <Link href="/(modals)/booking">Booking</Link>
+      <Link href="/listing/123">Listing Detail</Link>
     </View>
   )
 }
