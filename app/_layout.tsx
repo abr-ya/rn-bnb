@@ -102,9 +102,9 @@ function RootLayoutNav() {
       <Stack.Screen
         name="(modals)/booking"
         options={{
-          presentation: 'transparentModal',
+          presentation: 'modal', // 'transparentModal' ?
           animation: 'fade',
-          headerTransparent: true,
+          // headerTransparent: true,
           headerTitle: '',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()}>
