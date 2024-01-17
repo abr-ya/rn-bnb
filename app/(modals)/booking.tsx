@@ -1,12 +1,20 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
+import { BlurView } from 'expo-blur'
 
 const Booking = () => {
   return (
-    <View>
-      <Text>Booking</Text>
-    </View>
+    <BlurView intensity={70} style={styles.container} tint="light">
+      <Text>Booking Modal</Text>
+    </BlurView>
   )
 }
 
-export default Booking
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 100,
+  },
+});
+
+export default Booking;

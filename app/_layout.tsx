@@ -1,3 +1,4 @@
+import BookingHeader from '@/components/BookingHeader';
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
@@ -102,10 +103,10 @@ function RootLayoutNav() {
       <Stack.Screen
         name="(modals)/booking"
         options={{
-          presentation: 'modal', // 'transparentModal' ?
+          presentation: 'transparentModal',
           animation: 'fade',
-          // headerTransparent: true,
-          headerTitle: '',
+          headerTransparent: true,
+          headerTitle: (props) => <BookingHeader />,
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()}>
               <Ionicons name="close-outline" size={22} />
