@@ -1,11 +1,13 @@
-import BookingHeader from '@/components/BookingHeader';
-import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
-import { Ionicons } from '@expo/vector-icons';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack, router } from 'expo-router';
-import { getItemAsync, setItemAsync } from 'expo-secure-store';
 import { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { SplashScreen, Stack, useRouter } from 'expo-router';
+import { getItemAsync, setItemAsync } from 'expo-secure-store';
+import { useFonts } from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
+
+import BookingHeader from '@/components/BookingHeader';
+import Colors from '@/constants/Colors';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 // Cache the Clerk JWT
@@ -26,15 +28,15 @@ const tokenCache = {
   },
 };
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+// export {
+//   // Catch any errors thrown by the Layout component.
+//   ErrorBoundary,
+// } from 'expo-router';
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
+// export const unstable_settings = {
+//   // Ensure that reloading on `/modal` keeps a back button present.
+//   initialRouteName: '(tabs)',
+// };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -57,9 +59,7 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  if (!loaded) return null;
 
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
@@ -70,6 +70,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
 
   // Automatically open login if user is not authenticated
   useEffect(() => {
@@ -80,18 +81,13 @@ function RootLayoutNav() {
 
   return (
     <Stack>
-      <Stack.Screen
-        name="(tabs)"
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen  name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="(modals)/login"
         options={{
           title: "Login or Sign Up",
           presentation: 'modal',
-          headerTitleStyle: {
-            fontFamily: 'mon-sb',
-          },
+          headerTitleStyle: { fontFamily: 'mon-sb' },
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()}>
               <Ionicons name="close-outline" size={28} />
@@ -99,7 +95,6 @@ function RootLayoutNav() {
           ),
         }}
       />
-      <Stack.Screen name="listing/[id]" options={{ headerTitle: '' }} />
       <Stack.Screen
         name="(modals)/booking"
         options={{
@@ -108,12 +103,22 @@ function RootLayoutNav() {
           headerTransparent: true,
           headerTitle: (props) => <BookingHeader />,
           headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
+            <TouchableOpacity
+            onPress={() => router.back()}
+            style={{
+              backgroundColor: '#fff',
+              borderColor: Colors.grey,
+              borderRadius: 20,
+              borderWidth: 1,
+              padding: 4,
+            }}
+            >
               <Ionicons name="close-outline" size={22} />
             </TouchableOpacity>
           ),
         }}
       />
+      <Stack.Screen name="listing/[id]" options={{ headerTitle: '' }} />
     </Stack>
   );
 }
