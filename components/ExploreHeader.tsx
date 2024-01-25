@@ -7,41 +7,20 @@ import * as Haptics from 'expo-haptics';
 import { Link } from 'expo-router';
 
 const categories = [
-  {
-    name: 'Tiny homes',
-    icon: 'home',
-  },
-  {
-    name: 'Cabins',
-    icon: 'house-siding',
-  },
-  {
-    name: 'Trending',
-    icon: 'local-fire-department',
-  },
-  {
-    name: 'Play',
-    icon: 'videogame-asset',
-  },
-  {
-    name: 'City',
-    icon: 'apartment',
-  },
-  {
-    name: 'Beachfront',
-    icon: 'beach-access',
-  },
-  {
-    name: 'Countryside',
-    icon: 'nature-people',
-  },
+  { name: 'Tiny homes', icon: 'home' },
+  { name: 'Cabins', icon: 'house-siding' },
+  { name: 'Trending', icon: 'local-fire-department' },
+  { name: 'Play', icon: 'videogame-asset' },
+  { name: 'City', icon: 'apartment' },
+  { name: 'Beachfront', icon: 'beach-access' },
+  { name: 'Countryside', icon: 'nature-people' },
 ];
 
-interface Props {
+interface IExploreHeader {
   onCategoryChanged: (category: string) => void;
 }
 
-const ExploreHeader = ({ onCategoryChanged }: Props) => {
+const ExploreHeader = ({ onCategoryChanged }: IExploreHeader) => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<TouchableOpacity | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
